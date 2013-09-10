@@ -331,7 +331,15 @@
         this.consumes = response.consumes;
       }
       if ((response.basePath != null) && response.basePath.replace(/\s/g, '').length > 0) {
-        this.basePath = response.basePath;
+        if(response.basePath[0] === '/') {
+          if(response.basePath.length == 1) {
+            this.basePath = window.location.protocol + "//" + window.location.host
+          } else {
+            this.basePath = window.location.protocol + "//" + window.location.host + response.basePath
+          }
+        } else {
+          this.basePath = response.basePath;
+        }
       }
       this.addModels(response.models);
       if (response.apis) {
